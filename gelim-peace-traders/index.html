@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Gelim Peace Traders - Your trusted general retail shop for quality cereals, grains, legumes, rice, and household essentials at affordable prices.">
+    <title>GPT - Gelim Peace Traders | General Retail Shop</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="assets/logo.png" alt="GPT Logo">
+            </a>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#categories">Categories</a></li>
+                <li><a href="#payment">Payment</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg-shapes">
+            <div class="hero-shape shape-1"></div>
+            <div class="hero-shape shape-2"></div>
+            <div class="hero-shape shape-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">🏪 Your One-Stop Retail Shop</div>
+            <h1>Gelim Peace <span class="highlight">Traders</span></h1>
+            <p>Your trusted neighborhood shop for all your daily needs. From quality foodstuffs to household essentials
+                — we've got everything you need under one roof at fair prices.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">🛒 Shop Now</a>
+                <a href="#payment" class="btn btn-secondary">📱 Easy M-Pesa</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">Best</span>
+                    <span class="stat-label">Prices</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">Fast</span>
+                    <span class="stat-label">Service</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-product-showcase">
+                <img src="images/basmati-rice.jpg" alt="Rice" class="floating-product product-1">
+                <img src="images/ndengu.jpg" alt="Ndengu" class="floating-product product-2">
+                <img src="images/maize.jpg" alt="Maize" class="floating-product product-3">
+                <img src="images/sugar.jpg" alt="Sugar" class="floating-product product-4">
+            </div>
+            <div class="floating-card card-1">� Fresh Daily</div>
+            <div class="floating-card card-2">💰 Fair Prices</div>
+            <div class="floating-card card-3">⭐ Quality Guaranteed</div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">Shop by <span class="highlight">Category</span></h2>
+            <p class="section-subtitle">Browse our wide selection of quality products</p>
+            <div class="category-grid">
+                <button class="category-card active" data-category="all">
+                    <img src="images/maize.jpg" alt="All Products" class="category-img">
+                    <span class="category-name">All Products</span>
+                </button>
+                <button class="category-card" data-category="cereals">
+                    <img src="images/pipes.jpg" alt="Cereals" class="category-img">
+                    <span class="category-name">Cereals & Grains</span>
+                </button>
+                <button class="category-card" data-category="legumes">
+                    <img src="images/ndengu.jpg" alt="Legumes" class="category-img">
+                    <span class="category-name">Legumes & Beans</span>
+                </button>
+                <button class="category-card" data-category="rice">
+                    <img src="images/mahmoud-rice.jpg" alt="Rice" class="category-img">
+                    <span class="category-name">Rice</span>
+                </button>
+                <button class="category-card" data-category="household">
+                    <img src="images/msafi-500g.jpg" alt="Soap" class="category-img">
+                    <span class="category-name">Soap & Detergent</span>
+                </button>
+                <button class="category-card" data-category="essentials">
+                    <img src="images/salt.jpg" alt="Essentials" class="category-img">
+                    <span class="category-name">Essentials</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title">Our <span class="highlight">Products</span></h2>
+            <p class="section-subtitle">All prices are per kilogram (KES)</p>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Cereals & Grains -->
+                <div class="product-card" data-category="cereals">
+                    <div class="product-badge">Popular</div>
+                    <img src="images/popcorn.jpg" alt="Popcorn" class="product-img">
+                    <h3>Popcorn</h3>
+                    <p class="product-price">KES 220<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Popcorn" data-price="220">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/numbers-new.jpg" alt="Numbers" class="product-img">
+                    <h3>Numbers</h3>
+                    <p class="product-price">KES 210<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Numbers" data-price="210">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/letters-new.jpg" alt="Letters" class="product-img">
+                    <h3>Letters</h3>
+                    <p class="product-price">KES 210<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Letters" data-price="210">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/pipes.jpg" alt="Pipes" class="product-img">
+                    <h3>Pipes</h3>
+                    <p class="product-price">KES 240<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Pipes" data-price="240">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/mawele.jpg" alt="Mawele" class="product-img">
+                    <h3>Mawele (Millet)</h3>
+                    <p class="product-price">KES 110<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mawele" data-price="110">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/mtama.jpg" alt="Mtama" class="product-img">
+                    <h3>Mtama (Sorghum)</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mtama" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/ngano.jpg" alt="Ngano" class="product-img">
+                    <h3>Ngano (Wheat)</h3>
+                    <p class="product-price">KES 100<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Ngano" data-price="100">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/wimbi.jpg" alt="Wimbi" class="product-img">
+                    <h3>Wimbi (Finger Millet)</h3>
+                    <p class="product-price">KES 160<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Wimbi" data-price="160">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <div class="product-badge">Sizes</div>
+                    <img src="images/njugu.jpg" alt="Njugu" class="product-img">
+                    <h3>Njugu (Groundnuts)</h3>
+                    <p class="product-price">KES 300-350<span>/kg</span></p>
+                    <p class="product-note">Small, Medium, Large</p>
+                    <button class="add-to-order" data-name="Njugu" data-price="325">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <img src="images/muthokoi.jpg" alt="Muthokoi" class="product-img">
+                    <h3>Muthokoi</h3>
+                    <p class="product-price">KES 80<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Muthokoi" data-price="80">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="cereals">
+                    <div class="product-badge">Staple</div>
+                    <img src="images/maize.jpg" alt="Maize" class="product-img">
+                    <h3>Maize</h3>
+                    <p class="product-price">KES 65<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Maize" data-price="65">Add to Order</button>
+                </div>
+
+                <!-- Legumes & Beans -->
+                <div class="product-card" data-category="legumes">
+                    <img src="images/kamande.jpg" alt="Kamande" class="product-img">
+                    <h3>Kamande (Lentils)</h3>
+                    <p class="product-price">KES 250<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Kamande" data-price="250">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/chickpeas.jpg" alt="Chickpeas" class="product-img">
+                    <h3>Chick Peas</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Chick Peas" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/kunde-red.jpg" alt="Kunde Red" class="product-img">
+                    <h3>Kunde Red</h3>
+                    <p class="product-price">KES 150<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Kunde Red" data-price="150">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/kunde-white.jpg" alt="Kunde White" class="product-img">
+                    <h3>Kunde White</h3>
+                    <p class="product-price">KES 150<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Kunde White" data-price="150">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/minji.jpg" alt="Minji" class="product-img">
+                    <h3>Minji / Peas</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Minji/Peas" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <div class="product-badge">Popular</div>
+                    <img src="images/ndengu.jpg" alt="Ndengu" class="product-img">
+                    <h3>Ndengu (Green Grams)</h3>
+                    <p class="product-price">KES 180<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Ndengu" data-price="180">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/soya-beans.jpg" alt="Soya Beans" class="product-img">
+                    <h3>Soya Beans</h3>
+                    <p class="product-price">KES 160<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Soya Beans" data-price="160">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <div class="product-badge">Special</div>
+                    <img src="images/ndengu-special.jpg" alt="Ndengu Special" class="product-img">
+                    <h3>Ndengu Special</h3>
+                    <p class="product-price">KES 140<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Ndengu Special" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/yellow-beans.jpg" alt="Yellow Beans" class="product-img">
+                    <h3>Yellow Beans</h3>
+                    <p class="product-price">KES 170<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Yellow Beans" data-price="170">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/nyayo.jpg" alt="Nyayo" class="product-img">
+                    <h3>Nyayo</h3>
+                    <p class="product-price">KES 140<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Nyayo" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/mwitemania.jpg" alt="Mwitemania" class="product-img">
+                    <h3>Mwitemania / Sura Mbaya</h3>
+                    <p class="product-price">KES 150<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mwitemania" data-price="150">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/green-beans.jpg" alt="Green Beans" class="product-img">
+                    <h3>Green Beans</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Green Beans" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/noe.jpg" alt="Noe Black/White" class="product-img">
+                    <h3>Noe Black/White</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Noe" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/njahi.jpg" alt="Njahi" class="product-img">
+                    <h3>Njahi (Black Beans)</h3>
+                    <p class="product-price">KES 140<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Njahi" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/saitoti.jpg" alt="Saitoti Beans" class="product-img">
+                    <h3>Saitoti Beans</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Saitoti Beans" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/wairimu.jpg" alt="Wairimu Beans" class="product-img">
+                    <h3>Wairimu Beans</h3>
+                    <p class="product-price">KES 140<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Wairimu Beans" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/mbaazi.jpg" alt="Mbaazi" class="product-img">
+                    <h3>Mbaazi (Pigeon Peas)</h3>
+                    <p class="product-price">KES 140<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mbaazi" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/rose-cocoa.jpg" alt="Rose Cocoa" class="product-img">
+                    <h3>Rose Cocoa</h3>
+                    <p class="product-price">KES 170<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Rose Cocoa" data-price="170">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="legumes">
+                    <img src="images/simsim.jpg" alt="Simsim" class="product-img">
+                    <h3>Simsim (Sesame)</h3>
+                    <p class="product-price">KES 230<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Simsim" data-price="230">Add to Order</button>
+                </div>
+
+                <!-- Rice -->
+                <div class="product-card" data-category="rice">
+                    <div class="product-badge">Premium</div>
+                    <img src="images/pearl-rice.jpg" alt="Pearl Rice" class="product-img">
+                    <h3>Pearl Rice</h3>
+                    <p class="product-price">KES 190<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Pearl Rice" data-price="190">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <img src="images/sindano-white.jpg" alt="Sindano White" class="product-img">
+                    <h3>Sindano White</h3>
+                    <p class="product-price">KES 180<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Sindano White" data-price="180">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <img src="images/sindano-special.webp" alt="Sindano Special" class="product-img">
+                    <h3>Sindano Special</h3>
+                    <p class="product-price">KES 170<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Sindano Special" data-price="170">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <img src="images/sindano-local.jpg" alt="Sindano Local" class="product-img">
+                    <h3>Sindano Local</h3>
+                    <p class="product-price">KES 125<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Sindano Local" data-price="125">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <div class="product-badge">Healthy</div>
+                    <img src="images/brown-pishori.jpg" alt="Brown Pishori Rice" class="product-img">
+                    <h3>Brown Pishori Rice</h3>
+                    <p class="product-price">KES 200<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Brown Pishori Rice" data-price="200">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <div class="product-badge">Popular</div>
+                    <img src="images/pishori-rice.jpg" alt="Pishori Rice" class="product-img">
+                    <h3>Pishori Pure</h3>
+                    <p class="product-price">KES 190<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Pishori Pure" data-price="190">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <div class="product-badge">Value</div>
+                    <img src="images/broken-pishori.jpg" alt="Broken Pishori" class="product-img">
+                    <h3>Broken Pishori</h3>
+                    <p class="product-price">KES 100<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Broken Pishori" data-price="100">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <div class="product-badge">Premium</div>
+                    <img src="images/mahmoud-rice.jpg" alt="Mahmood Rice" class="product-img">
+                    <h3>Mahmood Rice</h3>
+                    <p class="product-price">KES 250<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mahmood Rice" data-price="250">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <img src="images/basmati-rice.jpg" alt="Basmati Rice" class="product-img">
+                    <h3>Basmati Rice</h3>
+                    <p class="product-price">KES 160<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Basmati Rice" data-price="160">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="rice">
+                    <img src="images/mr-rice.jpg" alt="Mr Rice" class="product-img">
+                    <h3>Mr Rice</h3>
+                    <p class="product-price">KES 125<span>/kg</span></p>
+                    <button class="add-to-order" data-name="Mr Rice" data-price="125">Add to Order</button>
+                </div>
+
+                <!-- Soap & Detergent -->
+                <div class="product-card" data-category="household">
+                    <img src="images/msafi-500g.jpg" alt="Msafi Powder 500g" class="product-img">
+                    <h3>Msafi Powder 500g</h3>
+                    <p class="product-price">KES 120<span>/pack</span></p>
+                    <button class="add-to-order" data-name="Msafi 500g" data-price="120">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="household">
+                    <div class="product-badge">Value</div>
+                    <img src="images/msafi-1kg.jpg" alt="Msafi 1kg" class="product-img">
+                    <h3>Msafi 1kg</h3>
+                    <p class="product-price">KES 250<span>/pack</span></p>
+                    <button class="add-to-order" data-name="Msafi 1kg" data-price="250">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="household">
+                    <img src="images/zenta-1kg.jpg" alt="Zenta 1kg" class="product-img">
+                    <h3>Zenta 1kg</h3>
+                    <p class="product-price">KES 160<span>/pack</span></p>
+                    <button class="add-to-order" data-name="Zenta 1kg" data-price="160">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="household">
+                    <img src="images/zenta-800g.jpg" alt="Zenta 800g" class="product-img">
+                    <h3>Zenta 800g</h3>
+                    <p class="product-price">KES 140<span>/pack</span></p>
+                    <button class="add-to-order" data-name="Zenta 800g" data-price="140">Add to Order</button>
+                </div>
+                <div class="product-card" data-category="household">
+                    <img src="images/zenta-600g.jpg" alt="Zenta 600g" class="product-img">
+                    <h3>Zenta 600g</h3>
+                    <p class="product-price">KES 100<span>/pack</span></p>
+                    <button class="add-to-order" data-name="Zenta 600g" data-price="100">Add to Order</button>
+                </div>
+
+                <!-- Essentials -->
+                <div class="product-card" data-category="essentials">
+                    <div class="product-badge">Staple</div>
+                    <img src="images/sugar.jpg" alt="Sugar" class="product-img">
+                    <h3>Sugar</h3>
+                    <p class="product-price">Ask for Price</p>
+                    <button class="add-to-order" data-name="Sugar" data-price="0">Inquire</button>
+                </div>
+                <div class="product-card" data-category="essentials">
+                    <img src="images/salt.jpg" alt="Salt" class="product-img">
+                    <h3>Salt</h3>
+                    <p class="product-price">Ask for Price</p>
+                    <button class="add-to-order" data-name="Salt" data-price="0">Inquire</button>
+                </div>
+                <div class="product-card" data-category="essentials">
+                    <img src="images/tea-leaves.jpg" alt="Tea Leaves" class="product-img">
+                    <h3>Tea Leaves</h3>
+                    <p class="product-price">Ask for Price</p>
+                    <button class="add-to-order" data-name="Tea Leaves" data-price="0">Inquire</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section class="payment" id="payment">
+        <div class="container">
+            <h2 class="section-title">Easy <span class="highlight">Payment</span></h2>
+            <p class="section-subtitle">Pay conveniently via M-Pesa</p>
+
+            <div class="payment-container">
+                <div class="order-summary">
+                    <h3>Your Order</h3>
+                    <div class="order-items" id="orderItems">
+                        <p class="empty-cart">Your cart is empty. Add products to get started!</p>
+                    </div>
+                    <div class="order-total">
+                        <span>Total:</span>
+                        <span id="orderTotal">KES 0</span>
+                    </div>
+                    <button class="btn btn-primary" id="sendOrder">Send Order via WhatsApp</button>
+                </div>
+
+                <div class="payment-info">
+                    <div class="payment-card">
+                        <div class="mpesa-logo">
+                            <span class="mpesa-icon">📱</span>
+                            <h3>M-Pesa Till Number</h3>
+                        </div>
+                        <div class="till-number" id="tillNumber">4944796</div>
+
+                        <p class="payment-instructions">
+                            1. Go to M-Pesa on your phone<br>
+                            2. Select "Lipa na M-Pesa"<br>
+                            3. Select "Buy Goods and Services"<br>
+                            4. Enter Till Number: <strong id="tillDisplay">4944796</strong><br>
+                            5. Enter Amount<br>
+                            6. Enter PIN and confirm
+                        </p>
+                        <button class="btn btn-primary copy-till" onclick="copyTill()">📋 Copy Till Number</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact <span class="highlight">Us</span></h2>
+            <p class="section-subtitle">We're here to serve you</p>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <span class="contact-icon">📍</span>
+                    <h3>Location</h3>
+                    <p>Visit our shop for the best deals</p>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">📞</span>
+                    <h3>Phone</h3>
+                    <p><a href="tel:+254732356935">0732 356 935</a><br><a href="tel:+254727912037">0727 912
+                            037</a><br><a href="tel:+254720158850">0720 158 850</a></p>
+                </div>
+                <div class="contact-card">
+                    <span class="contact-icon">⏰</span>
+                    <h3>Working Hours</h3>
+                    <p>Mon - Sat: 7:00 AM - 8:00 PM<br>Sunday: 8:00 AM - 6:00 PM</p>
+                </div>
+                <div class="contact-card contact-card-qr">
+                    <span class="contact-icon">💬</span>
+                    <h3>WhatsApp</h3>
+                    <p><a href="https://wa.me/254716636455">0716 636 455</a></p>
+                    <div class="qr-code-small" id="whatsappQR"></div>
+                    <p class="qr-hint-small">Scan to chat</p>
+                </div>
+
+                <!-- Website QR Code Card -->
+                <div class="contact-card contact-card-qr">
+                    <span class="contact-icon">🌐</span>
+                    <h3>Visit Website</h3>
+                    <div class="qr-code-small" id="websiteQR"></div>
+                    <p class="qr-hint-small">Scan to visit our shop</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="assets/logo.png" alt="GPT Logo" class="footer-logo">
+                    <p>Quality products, fair prices, trusted service.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#products">Products</a>
+                    <a href="#payment">Payment</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-categories">
+                    <h4>Categories</h4>
+                    <a href="#products">Cereals & Grains</a>
+                    <a href="#products">Legumes & Beans</a>
+                    <a href="#products">Rice</a>
+                    <a href="#products">Household</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Gelim Peace Traders (GPT). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Cart Button -->
+    <button class="floating-cart" id="floatingCart">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

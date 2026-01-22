@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT - Shop QR Code Poster</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .poster {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 10px 40px rgba(26, 45, 90, 0.12);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            border: 3px solid #1a2d5a;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 24px;
+        }
+
+        .shop-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a2d5a;
+            margin-bottom: 8px;
+        }
+
+        .shop-name .highlight {
+            color: #ff6b35;
+        }
+
+        .tagline {
+            color: #64748b;
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        .qr-container {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4f8 100%);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        #websiteQR {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        #websiteQR img {
+            display: block;
+        }
+
+        .scan-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a2d5a;
+            margin-bottom: 8px;
+        }
+
+        .scan-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .website-url {
+            color: #ff6b35;
+            font-weight: 600;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .features {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: #f0f7ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #1a2d5a;
+        }
+
+        .print-btn {
+            margin-top: 24px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c5a 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .poster {
+                box-shadow: none;
+                border: 2px solid #1a2d5a;
+                max-width: 100%;
+                page-break-inside: avoid;
+            }
+
+            .print-btn {
+                display: none !important;
+            }
+        }
+
+        /* Multiple sizes for printing */
+        .size-options {
+            margin-top: 16px;
+            color: #64748b;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="poster">
+        <img src="assets/logo.png" alt="GPT Logo" class="logo">
+        <h1 class="shop-name">Gelim Peace <span class="highlight">Traders</span></h1>
+        <p class="tagline">Your Trusted General Retail Shop</p>
+
+        <div class="qr-container">
+            <div class="scan-icon">📱</div>
+            <p class="scan-text">Scan to Visit Our Shop!</p>
+            <div id="websiteQR"></div>
+            <p class="website-url">gelim-peace-traders.vercel.app</p>
+        </div>
+
+        <div class="features">
+            <span class="feature">🛒 Browse Products</span>
+            <span class="feature">💰 See Prices</span>
+            <span class="feature">📱 Order via WhatsApp</span>
+        </div>
+
+        <button class="print-btn" onclick="window.print()">🖨️ Print This Poster</button>
+        <p class="size-options">Tip: Print at different sizes (A4, A5, A6) for various locations</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const websiteQR = document.getElementById('websiteQR');
+            if (websiteQR && typeof QRCode !== 'undefined') {
+                new QRCode(websiteQR, {
+                    text: 'https://gelim-peace-traders.vercel.app',
+                    width: 200,
+                    height: 200,
+                    colorDark: '#1a2d5a',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
