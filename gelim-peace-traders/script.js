@@ -9,7 +9,7 @@ const orderItems = document.getElementById('orderItems');
 const orderTotal = document.getElementById('orderTotal');
 const cartCount = document.getElementById('cartCount');
 const floatingCart = document.getElementById('floatingCart');
-const categoryCards = document.querySelectorAll('.category-card');
+const categoryPills = document.querySelectorAll('.category-pill');
 const addToOrderBtns = document.querySelectorAll('.add-to-order');
 
 // Mobile Navigation Toggle
@@ -18,12 +18,12 @@ mobileToggle.addEventListener('click', () => {
 });
 
 // Category Filter
-categoryCards.forEach(card => {
-    card.addEventListener('click', () => {
-        categoryCards.forEach(c => c.classList.remove('active'));
-        card.classList.add('active');
+categoryPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+        categoryPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
 
-        const category = card.dataset.category;
+        const category = pill.dataset.category;
         const products = document.querySelectorAll('.product-card');
 
         products.forEach(product => {
@@ -33,6 +33,9 @@ categoryCards.forEach(card => {
                 product.classList.add('hidden');
             }
         });
+
+        // Scroll to products section
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
