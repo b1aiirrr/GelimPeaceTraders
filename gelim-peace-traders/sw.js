@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v2-20260123';
+const CACHE_VERSION = 'v3-20260123b';
 const CACHE_NAME = 'gpt-shop-' + CACHE_VERSION;
 const ASSETS_TO_CACHE = [
     '/',
