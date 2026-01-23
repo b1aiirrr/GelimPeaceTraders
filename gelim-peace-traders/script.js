@@ -240,7 +240,9 @@ const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
 // Device detection
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isAppleDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+    (navigator.vendor && navigator.vendor.indexOf('Apple') > -1);
 
 function isAppInstalled() {
     return window.matchMedia('(display-mode: standalone)').matches ||
@@ -249,13 +251,12 @@ function isAppInstalled() {
 }
 
 function wasBannerDismissed() {
-    // Resetting for now to ensure user sees it
     const dismissed = localStorage.getItem('pwa-install-dismissed');
     if (!dismissed) return false;
 
     const dismissedDate = new Date(parseInt(dismissed));
     const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
-    return daysSinceDismissed < 0.1; // Only hide for ~2 hours during testing
+    return daysSinceDismissed < 0.1; // Reset quickly for testing
 }
 
 let bannerShown = false;
@@ -276,7 +277,7 @@ function hideInstallBanner() {
     }
 }
 
-// Android/Chrome/Edge/Desktop Safari(macOS Sonoma+) event
+// Android/Chrome/Edge/PC/Mac(Safari 17+)
 window.addEventListener('beforeinstallprompt', (e) => {
     console.log('beforeinstallprompt fired');
     e.preventDefault();
@@ -293,8 +294,9 @@ if (installBtn) {
             console.log('User choice:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
-        } else if (isIOS) {
-            alert('Apple (iOS/Mac Safari) requires manual installation.\n\nTo install:\n1. Tap the Share button (square with arrow)\n2. Select "Add to Home Screen" or "Add to Dock"');
+        } else if (isAppleDevice) {
+            // Chrome on iOS also uses the Share button to install
+            alert('Installing on Apple Devices:\n\n1. Tap the Share button (square with arrow)\n2. Select "Add to Home Screen"');
         } else {
             alert('To install:\n\n1. Use your browser menu (3 dots or arrow)\n2. Select "Install" or "Add to Home Screen"');
         }
