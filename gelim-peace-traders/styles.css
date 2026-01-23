@@ -873,7 +873,7 @@ body {
 
 .footer-content {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr;
     gap: 48px;
     margin-bottom: 40px;
 }
@@ -893,20 +893,46 @@ body {
 .footer-links h4,
 .footer-categories h4 {
     margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--primary-gold);
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .footer-links a,
 .footer-categories a {
-    display: block;
-    color: rgba(255, 255, 255, 0.7);
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
-    margin-bottom: 12px;
-    transition: var(--transition);
+    margin-bottom: 14px;
+    padding: 6px 0;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/* Hover underline effect */
+.footer-links a::after,
+.footer-categories a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary-gold);
+    transition: width 0.3s ease;
 }
 
 .footer-links a:hover,
 .footer-categories a:hover {
     color: var(--primary-gold);
+    transform: translateX(8px);
+}
+
+.footer-links a:hover::after,
+.footer-categories a:hover::after {
+    width: 100%;
 }
 
 .footer-bottom {
