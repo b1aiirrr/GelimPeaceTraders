@@ -1095,23 +1095,22 @@ body {
 /* PWA Install Banner */
 .install-banner {
     position: fixed;
-    bottom: 0 !important;
-    top: auto !important;
+    top: 0 !important;
+    bottom: auto !important;
     left: 0;
     right: 0;
     background: linear-gradient(135deg, var(--primary-navy) 0%, #2a4073 100%);
     color: var(--white);
-    padding: 16px 24px;
-    padding-bottom: calc(16px + env(safe-area-inset-bottom));
-    /* Support for safe areas/home bar */
+    padding: 10px 20px;
+    padding-top: calc(10px + env(safe-area-inset-top));
+    /* Support for notches/top safe areas */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 12px;
     z-index: 99999999;
-    /* Even higher to be absolutely sure */
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
-    transform: translateY(110%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-110%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
 }
@@ -1128,18 +1127,18 @@ body {
 }
 
 .install-banner-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
     flex-shrink: 0;
 }
 
 .install-banner-text h4 {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .install-banner-text p {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     opacity: 0.9;
     margin: 0;
 }
@@ -1151,11 +1150,12 @@ body {
 }
 
 .install-btn {
-    padding: 10px 24px;
+    padding: 8px 18px;
     background: var(--gradient-gold);
     color: var(--primary-navy);
     border: none;
     border-radius: 50px;
+    font-size: 0.85rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -1166,11 +1166,12 @@ body {
 }
 
 .install-dismiss {
-    padding: 10px 16px;
+    padding: 8px 14px;
     background: transparent;
     color: var(--white);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
+    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
     transition: var(--transition);
