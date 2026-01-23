@@ -287,17 +287,18 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
+            // Android: This triggers the native browser install dialog DIRECTLY
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             console.log('User choice:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
+        } else if (isIOS) {
+            // iOS: Direct install is FORBIDDEN by Apple. We must show the manual step.
+            alert('Apple (iPhone) does not allow websites to install directly.\n\nTo install:\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"');
         } else {
-            if (isIOS) {
-                alert('Install Gelim Peace Traders:\n\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
-            } else {
-                alert('Install Gelim Peace Traders:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
-            }
+            // Mobile fallback
+            alert('To install:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
         }
     });
 }
