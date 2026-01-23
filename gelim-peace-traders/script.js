@@ -74,13 +74,21 @@ function showAddedFeedback(btn) {
 
 // Update Cart Display
 function updateCart() {
+    const sendOrderBtn = document.getElementById('sendOrder');
     cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
 
     if (cart.length === 0) {
         orderItems.innerHTML = '<p class="empty-cart">Your cart is empty. Add products to get started!</p>';
         orderTotal.textContent = 'KES 0';
+        sendOrderBtn.disabled = true;
+        sendOrderBtn.style.opacity = '0.5';
+        sendOrderBtn.style.cursor = 'not-allowed';
         return;
     }
+
+    sendOrderBtn.disabled = false;
+    sendOrderBtn.style.opacity = '1';
+    sendOrderBtn.style.cursor = 'pointer';
 
     let html = '';
     let total = 0;
@@ -214,5 +222,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
+    }
+
+    // Initialize send order button as disabled (cart is empty on page load)
+    const sendOrderBtn = document.getElementById('sendOrder');
+    if (sendOrderBtn) {
+        sendOrderBtn.disabled = true;
+        sendOrderBtn.style.opacity = '0.5';
+        sendOrderBtn.style.cursor = 'not-allowed';
     }
 });
