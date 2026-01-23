@@ -239,7 +239,7 @@ const installBanner = document.getElementById('installBanner');
 const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
-// Device detection
+// Comprehensive Apple detection (iPhone, iPad, Mac Safari)
 const isAppleDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
     (navigator.vendor && navigator.vendor.indexOf('Apple') > -1);
@@ -256,7 +256,7 @@ function wasBannerDismissed() {
 
     const dismissedDate = new Date(parseInt(dismissed));
     const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
-    return daysSinceDismissed < 0.1; // Reset quickly for testing
+    return daysSinceDismissed < 0.1; // Re-show after ~2 hours for testing
 }
 
 let bannerShown = false;
@@ -266,7 +266,7 @@ function showInstallBanner() {
         bannerShown = true;
         setTimeout(() => {
             installBanner.classList.add('show');
-            console.log('Install banner shown after 1 second');
+            console.log('PWA Banner shown');
         }, 1000);
     }
 }
@@ -277,11 +277,12 @@ function hideInstallBanner() {
     }
 }
 
-// Android/Chrome/Edge/PC/Mac(Safari 17+)
+// Android/Chrome/PC - This event makes direct install possible
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('beforeinstallprompt fired');
+    console.log('beforeinstallprompt fired - Direct install ready');
     e.preventDefault();
     deferredPrompt = e;
+    // On Android/PC, we ONLY show the banner when we know we can do a direct install
     showInstallBanner();
 });
 
@@ -289,16 +290,18 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
+            // This is the direct install logic for Android/Chrome
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            console.log('User choice:', outcome);
+            console.log('Direct install result:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
         } else if (isAppleDevice) {
-            // Chrome on iOS also uses the Share button to install
-            alert('Installing on Apple Devices:\n\n1. Tap the Share button (square with arrow)\n2. Select "Add to Home Screen"');
+            // Direct install is forbidden on Apple devices, so we show the specific steps
+            alert('To Install GPT App on iPhone/iPad:\n\n1. Tap the Share button (bottom center)\n2. Select "Add to Home Screen"');
         } else {
-            alert('To install:\n\n1. Use your browser menu (3 dots or arrow)\n2. Select "Install" or "Add to Home Screen"');
+            // Generic mobile fallback if beforeinstallprompt didn't fire
+            alert('To install:\n1. Open your browser menu\n2. Select "Install App" or "Add to Home Screen"');
         }
     });
 }
@@ -311,8 +314,8 @@ if (dismissBtn) {
     });
 }
 
-// Show banner for all if beforeinstallprompt doesn't fire (like iOS)
-if (!isAppInstalled() && !wasBannerDismissed()) {
+// For Apple devices, we show the banner immediately (after 1s) because they never fire the event
+if (isAppleDevice && !isAppInstalled() && !wasBannerDismissed()) {
     showInstallBanner();
 }
 

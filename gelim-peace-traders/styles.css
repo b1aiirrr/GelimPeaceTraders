@@ -1101,21 +1101,19 @@ body {
     right: 0;
     background: linear-gradient(135deg, var(--primary-navy) 0%, #2a4073 100%);
     color: var(--white);
-    padding: 6px 16px;
-    /* Reduced vertical padding */
-    padding-top: calc(6px + env(safe-area-inset-top));
+    padding: 6px 12px;
+    /* Very tight vertical padding */
+    padding-top: calc(4px + env(safe-area-inset-top));
     /* Support for notch */
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
     z-index: 99999999;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     transform: translateY(-110%);
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 100%;
-    min-height: 44px;
-    /* Minimum touch target height but slim */
 }
 
 .install-banner.show {
@@ -1125,85 +1123,67 @@ body {
 .install-banner-content {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     flex: 1;
 }
 
 .install-banner-icon {
-    font-size: 1.2rem;
-    /* Slighly smaller */
+    font-size: 1.1rem;
+    /* Tiny icon */
     flex-shrink: 0;
 }
 
 .install-banner-text h4 {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    /* Smallest readable font */
     font-weight: 600;
-    margin-bottom: 2px;
+    margin: 0;
 }
 
 .install-banner-text p {
-    font-size: 0.7rem;
-    /* Slighly smaller */
-    opacity: 0.9;
+    font-size: 0.65rem;
+    opacity: 0.8;
     margin: 0;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 .install-banner-actions {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .install-btn {
-    padding: 8px 18px;
+    padding: 5px 12px;
+    /* Smaller button */
     background: var(--gradient-gold);
     color: var(--primary-navy);
     border: none;
     border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
-}
-
-.install-btn:hover {
-    transform: scale(1.05);
 }
 
 .install-dismiss {
-    padding: 8px 14px;
+    padding: 5px 10px;
     background: transparent;
     color: var(--white);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 0.75rem;
     cursor: pointer;
-    transition: var(--transition);
-}
-
-.install-dismiss:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 600px) {
     .install-banner {
-        padding: 8px 12px;
-        padding-top: calc(8px + env(safe-area-inset-top));
-        flex-direction: row;
-        /* Keep row-aligned to save thickness */
+        padding: 4px 10px;
+        padding-top: calc(4px + env(safe-area-inset-top));
     }
 
     .install-banner-text p {
         display: none;
-        /* Hide subtitle on mobile to save space */
-    }
-
-    .install-btn,
-    .install-dismiss {
-        padding: 6px 12px;
-        font-size: 0.75rem;
+        /* Hide subtitle completely on small screens */
     }
 }
