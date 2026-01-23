@@ -239,26 +239,33 @@ const installBanner = document.getElementById('installBanner');
 const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
-// Check if already installed or dismissed
+// Improved mobile detection
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || isIOS;
+
 function isAppInstalled() {
     return window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true;
+        window.navigator.standalone === true ||
+        document.referrer.includes('android-app://');
 }
 
 function wasBannerDismissed() {
+    // Resetting for now to ensure user sees it
     const dismissed = localStorage.getItem('pwa-install-dismissed');
     if (!dismissed) return false;
-    // Show again after 7 days
+
     const dismissedDate = new Date(parseInt(dismissed));
     const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
-    return daysSinceDismissed < 7;
+    return daysSinceDismissed < 1; // Only hide for 1 day instead of 7 during debugging
 }
 
 function showInstallBanner() {
+    console.log('Attempting to show install banner. Mobile:', isMobile, 'Installed:', isAppInstalled());
     if (!isAppInstalled() && !wasBannerDismissed() && installBanner) {
         setTimeout(() => {
             installBanner.classList.add('show');
-        }, 3000); // Show after 3 seconds
+            console.log('Install banner shown');
+        }, 1000); // reduced to 1 second for faster feedback
     }
 }
 
@@ -268,38 +275,34 @@ function hideInstallBanner() {
     }
 }
 
-// Listen for beforeinstallprompt (Android/Chrome)
+// Android/Chrome event
 window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('beforeinstallprompt fired');
     e.preventDefault();
     deferredPrompt = e;
     showInstallBanner();
 });
 
-// Install button click
+// Install button
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
-            // Android/Chrome - trigger native prompt
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                console.log('App installed');
-            }
+            console.log('User choice:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
         } else {
-            // iOS or other - show instructions
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
             if (isIOS) {
-                alert('To install:\n\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
+                alert('Install Gelim Peace Traders:\n\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
             } else {
-                alert('To install:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
+                alert('Install Gelim Peace Traders:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
             }
         }
     });
 }
 
-// Dismiss button click
+// Dismiss button
 if (dismissBtn) {
     dismissBtn.addEventListener('click', () => {
         localStorage.setItem('pwa-install-dismissed', Date.now().toString());
@@ -307,10 +310,15 @@ if (dismissBtn) {
     });
 }
 
-// For iOS - show banner after delay (since beforeinstallprompt doesn't fire)
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-if (isIOS && !isAppInstalled() && !wasBannerDismissed()) {
+// Show banner for iOS/Other mobile if beforeinstallprompt doesn't fire
+if (isMobile && !isAppInstalled() && !wasBannerDismissed()) {
     showInstallBanner();
+}
+
+// Global detection for already installed
+if (isAppInstalled()) {
+    console.log('App is already installed');
+    hideInstallBanner();
 }
 
 // Hide banner if app gets installed
