@@ -239,10 +239,10 @@ const installBanner = document.getElementById('installBanner');
 const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
-// Comprehensive Apple detection (iPhone, iPad, Mac Safari)
+// Apple device detection
 const isAppleDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
-    (navigator.vendor && navigator.vendor.indexOf('Apple') > -1);
+    (navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/Chrome/.test(navigator.userAgent));
 
 function isAppInstalled() {
     return window.matchMedia('(display-mode: standalone)').matches ||
@@ -277,12 +277,11 @@ function hideInstallBanner() {
     }
 }
 
-// Android/Chrome/PC - This event makes direct install possible
+// Android/Chrome/PC/Edge - This event makes direct install possible
 window.addEventListener('beforeinstallprompt', (e) => {
     console.log('beforeinstallprompt fired - Direct install ready');
     e.preventDefault();
     deferredPrompt = e;
-    // On Android/PC, we ONLY show the banner when we know we can do a direct install
     showInstallBanner();
 });
 
@@ -290,18 +289,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
-            // This is the direct install logic for Android/Chrome
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             console.log('Direct install result:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
         } else if (isAppleDevice) {
-            // Direct install is forbidden on Apple devices, so we show the specific steps
-            alert('To Install GPT App on iPhone/iPad:\n\n1. Tap the Share button (bottom center)\n2. Select "Add to Home Screen"');
+            alert('To Install GPT App:\n\n1. Tap the Share button\n2. Select "Add to Home Screen"');
         } else {
-            // Generic mobile fallback if beforeinstallprompt didn't fire
-            alert('To install:\n1. Open your browser menu\n2. Select "Install App" or "Add to Home Screen"');
+            alert('To install:\n\n1. Click the browser menu (⋮)\n2. Select "Install Gelim Peace Traders" or "Add to Home Screen"');
         }
     });
 }
@@ -314,13 +310,20 @@ if (dismissBtn) {
     });
 }
 
-// For Apple devices, we show the banner immediately (after 1s) because they never fire the event
-if (isAppleDevice && !isAppInstalled() && !wasBannerDismissed()) {
-    showInstallBanner();
-}
+// FALLBACK: Show banner for ALL devices after 2 seconds if beforeinstallprompt hasn't fired
+// This ensures the banner shows on Safari, Firefox, or when PWA criteria aren't met
+setTimeout(() => {
+    if (!bannerShown && !isAppInstalled() && !wasBannerDismissed()) {
+        console.log('Fallback: showing banner for all devices');
+        showInstallBanner();
+    }
+}, 2000);
 
 // Hide banner if app gets installed
 window.addEventListener('appinstalled', () => {
     hideInstallBanner();
     console.log('App was installed');
 });
+
+// Clear dismissal for fresh testing (remove this line in production)
+localStorage.removeItem('pwa-install-dismissed');
