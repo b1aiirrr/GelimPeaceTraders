@@ -239,9 +239,8 @@ const installBanner = document.getElementById('installBanner');
 const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
-// Improved mobile detection
+// Device detection
 const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || isIOS;
 
 function isAppInstalled() {
     return window.matchMedia('(display-mode: standalone)').matches ||
@@ -256,16 +255,18 @@ function wasBannerDismissed() {
 
     const dismissedDate = new Date(parseInt(dismissed));
     const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
-    return daysSinceDismissed < 1; // Only hide for 1 day instead of 7 during debugging
+    return daysSinceDismissed < 0.1; // Only hide for ~2 hours during testing
 }
 
+let bannerShown = false;
 function showInstallBanner() {
-    console.log('Attempting to show install banner. Mobile:', isMobile, 'Installed:', isAppInstalled());
+    if (bannerShown) return;
     if (!isAppInstalled() && !wasBannerDismissed() && installBanner) {
+        bannerShown = true;
         setTimeout(() => {
             installBanner.classList.add('show');
-            console.log('Install banner shown');
-        }, 1000); // reduced to 1 second for faster feedback
+            console.log('Install banner shown after 1 second');
+        }, 1000);
     }
 }
 
@@ -275,7 +276,7 @@ function hideInstallBanner() {
     }
 }
 
-// Android/Chrome event
+// Android/Chrome/Edge/Desktop Safari(macOS Sonoma+) event
 window.addEventListener('beforeinstallprompt', (e) => {
     console.log('beforeinstallprompt fired');
     e.preventDefault();
@@ -287,18 +288,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
         if (deferredPrompt) {
-            // Android: This triggers the native browser install dialog DIRECTLY
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             console.log('User choice:', outcome);
             deferredPrompt = null;
             hideInstallBanner();
         } else if (isIOS) {
-            // iOS: Direct install is FORBIDDEN by Apple. We must show the manual step.
-            alert('Apple (iPhone) does not allow websites to install directly.\n\nTo install:\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"');
+            alert('Apple (iOS/Mac Safari) requires manual installation.\n\nTo install:\n1. Tap the Share button (square with arrow)\n2. Select "Add to Home Screen" or "Add to Dock"');
         } else {
-            // Mobile fallback
-            alert('To install:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
+            alert('To install:\n\n1. Use your browser menu (3 dots or arrow)\n2. Select "Install" or "Add to Home Screen"');
         }
     });
 }
@@ -311,15 +309,9 @@ if (dismissBtn) {
     });
 }
 
-// Show banner for iOS/Other mobile if beforeinstallprompt doesn't fire
-if (isMobile && !isAppInstalled() && !wasBannerDismissed()) {
+// Show banner for all if beforeinstallprompt doesn't fire (like iOS)
+if (!isAppInstalled() && !wasBannerDismissed()) {
     showInstallBanner();
-}
-
-// Global detection for already installed
-if (isAppInstalled()) {
-    console.log('App is already installed');
-    hideInstallBanner();
 }
 
 // Hide banner if app gets installed
