@@ -234,29 +234,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // PWA Install Banner Logic
-let deferredPrompt;
+let deferredPrompt = null;
+let directInstallReady = false;
 const installBanner = document.getElementById('installBanner');
 const installBtn = document.getElementById('installBtn');
 const dismissBtn = document.getElementById('dismissBtn');
 
-// Apple device detection
+// Device detection
+const isAndroid = /Android/i.test(navigator.userAgent);
 const isAppleDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
-    (navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && !/Chrome/.test(navigator.userAgent));
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const isChrome = /Chrome/i.test(navigator.userAgent) && !/Edge|Edg/i.test(navigator.userAgent);
+
+console.log('Device Detection:', { isAndroid, isAppleDevice, isChrome, userAgent: navigator.userAgent });
 
 function isAppInstalled() {
-    return window.matchMedia('(display-mode: standalone)').matches ||
+    const installed = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true ||
         document.referrer.includes('android-app://');
+    console.log('App installed check:', installed);
+    return installed;
 }
 
 function wasBannerDismissed() {
     const dismissed = localStorage.getItem('pwa-install-dismissed');
     if (!dismissed) return false;
-
-    const dismissedDate = new Date(parseInt(dismissed));
-    const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
-    return daysSinceDismissed < 0.1; // Re-show after ~2 hours for testing
+    const daysSinceDismissed = (Date.now() - parseInt(dismissed)) / (1000 * 60 * 60 * 24);
+    return daysSinceDismissed < 0.1;
 }
 
 let bannerShown = false;
@@ -266,7 +270,7 @@ function showInstallBanner() {
         bannerShown = true;
         setTimeout(() => {
             installBanner.classList.add('show');
-            console.log('PWA Banner shown');
+            console.log('PWA Banner shown. Direct install ready:', directInstallReady);
         }, 1000);
     }
 }
@@ -277,27 +281,49 @@ function hideInstallBanner() {
     }
 }
 
-// Android/Chrome/PC/Edge - This event makes direct install possible
+// CRITICAL: This event fires on Android/Chrome when direct install is possible
 window.addEventListener('beforeinstallprompt', (e) => {
-    console.log('beforeinstallprompt fired - Direct install ready');
+    console.log('🎉 beforeinstallprompt FIRED! Direct install is now possible.');
     e.preventDefault();
     deferredPrompt = e;
+    directInstallReady = true;
+
+    // Update button text to show direct install is ready
+    if (installBtn) {
+        installBtn.textContent = '⬇️ Install Now';
+        installBtn.style.background = 'linear-gradient(135deg, #43a047 0%, #2e7d32 100%)';
+    }
+
     showInstallBanner();
 });
 
-// Install button
+// Install button click handler
 if (installBtn) {
     installBtn.addEventListener('click', async () => {
+        console.log('Install button clicked. deferredPrompt:', !!deferredPrompt);
+
         if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log('Direct install result:', outcome);
-            deferredPrompt = null;
-            hideInstallBanner();
+            console.log('Triggering native install prompt...');
+            try {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log('User choice:', outcome);
+                if (outcome === 'accepted') {
+                    console.log('User accepted the install');
+                }
+                deferredPrompt = null;
+                directInstallReady = false;
+                hideInstallBanner();
+            } catch (error) {
+                console.error('Install prompt error:', error);
+                alert('Installation failed. Please try again or use browser menu to install.');
+            }
         } else if (isAppleDevice) {
-            alert('To Install GPT App:\n\n1. Tap the Share button\n2. Select "Add to Home Screen"');
+            alert('To Install GPT App:\n\n1. Tap the Share button (📤)\n2. Select "Add to Home Screen"');
+        } else if (isAndroid) {
+            alert('To Install on Android:\n\n1. Tap the menu (⋮) at top-right\n2. Select "Install app" or "Add to Home screen"\n\nNote: If you previously dismissed the install prompt, you may need to clear site data in browser settings.');
         } else {
-            alert('To install:\n\n1. Click the browser menu (⋮)\n2. Select "Install Gelim Peace Traders" or "Add to Home Screen"');
+            alert('To Install:\n\n1. Click browser menu (⋮)\n2. Select "Install Gelim Peace Traders"');
         }
     });
 }
@@ -310,20 +336,20 @@ if (dismissBtn) {
     });
 }
 
-// FALLBACK: Show banner for ALL devices after 2 seconds if beforeinstallprompt hasn't fired
-// This ensures the banner shows on Safari, Firefox, or when PWA criteria aren't met
+// Fallback timer for devices that don't fire beforeinstallprompt
 setTimeout(() => {
     if (!bannerShown && !isAppInstalled() && !wasBannerDismissed()) {
-        console.log('Fallback: showing banner for all devices');
+        console.log('Fallback: showing banner (beforeinstallprompt did not fire)');
         showInstallBanner();
     }
-}, 2000);
+}, 3000);
 
-// Hide banner if app gets installed
+// App installed event
 window.addEventListener('appinstalled', () => {
     hideInstallBanner();
-    console.log('App was installed');
+    console.log('✅ App was installed successfully!');
 });
 
-// Clear dismissal for fresh testing (remove this line in production)
+// Clear dismissal for testing
 localStorage.removeItem('pwa-install-dismissed');
+console.log('PWA script loaded. Waiting for beforeinstallprompt...');
