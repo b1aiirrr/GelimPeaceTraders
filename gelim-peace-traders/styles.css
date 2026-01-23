@@ -1091,3 +1091,104 @@ body {
         font-size: 2rem;
     }
 }
+
+/* PWA Install Banner */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, var(--primary-navy) 0%, #2a4073 100%);
+    color: var(--white);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    z-index: 10000;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.4s ease-out;
+}
+
+.install-banner.show {
+    transform: translateY(0);
+}
+
+.install-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.install-banner-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.install-banner-text h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.install-banner-text p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.install-banner-actions {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.install-btn {
+    padding: 10px 24px;
+    background: var(--gradient-gold);
+    color: var(--primary-navy);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.install-btn:hover {
+    transform: scale(1.05);
+}
+
+.install-dismiss {
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.install-dismiss:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 600px) {
+    .install-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .install-banner-content {
+        flex-direction: column;
+    }
+
+    .install-banner-actions {
+        width: 100%;
+        justify-content: center;
+    }
+}

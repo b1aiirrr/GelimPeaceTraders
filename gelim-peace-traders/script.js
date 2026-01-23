@@ -232,3 +232,89 @@ document.addEventListener('DOMContentLoaded', () => {
         sendOrderBtn.style.cursor = 'not-allowed';
     }
 });
+
+// PWA Install Banner Logic
+let deferredPrompt;
+const installBanner = document.getElementById('installBanner');
+const installBtn = document.getElementById('installBtn');
+const dismissBtn = document.getElementById('dismissBtn');
+
+// Check if already installed or dismissed
+function isAppInstalled() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+}
+
+function wasBannerDismissed() {
+    const dismissed = localStorage.getItem('pwa-install-dismissed');
+    if (!dismissed) return false;
+    // Show again after 7 days
+    const dismissedDate = new Date(parseInt(dismissed));
+    const daysSinceDismissed = (Date.now() - dismissedDate) / (1000 * 60 * 60 * 24);
+    return daysSinceDismissed < 7;
+}
+
+function showInstallBanner() {
+    if (!isAppInstalled() && !wasBannerDismissed() && installBanner) {
+        setTimeout(() => {
+            installBanner.classList.add('show');
+        }, 3000); // Show after 3 seconds
+    }
+}
+
+function hideInstallBanner() {
+    if (installBanner) {
+        installBanner.classList.remove('show');
+    }
+}
+
+// Listen for beforeinstallprompt (Android/Chrome)
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallBanner();
+});
+
+// Install button click
+if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            // Android/Chrome - trigger native prompt
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                console.log('App installed');
+            }
+            deferredPrompt = null;
+            hideInstallBanner();
+        } else {
+            // iOS or other - show instructions
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            if (isIOS) {
+                alert('To install:\n\n1. Tap the Share button (square with arrow)\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add"');
+            } else {
+                alert('To install:\n\n1. Open browser menu (3 dots)\n2. Tap "Add to Home Screen" or "Install App"');
+            }
+        }
+    });
+}
+
+// Dismiss button click
+if (dismissBtn) {
+    dismissBtn.addEventListener('click', () => {
+        localStorage.setItem('pwa-install-dismissed', Date.now().toString());
+        hideInstallBanner();
+    });
+}
+
+// For iOS - show banner after delay (since beforeinstallprompt doesn't fire)
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+if (isIOS && !isAppInstalled() && !wasBannerDismissed()) {
+    showInstallBanner();
+}
+
+// Hide banner if app gets installed
+window.addEventListener('appinstalled', () => {
+    hideInstallBanner();
+    console.log('App was installed');
+});
