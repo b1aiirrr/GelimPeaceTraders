@@ -154,7 +154,7 @@ document.getElementById('sendOrder').addEventListener('click', () => {
         return;
     }
 
-    let message = '🛒 *New Order from GPT Website*\n\n';
+    let message = '🛒 *New Order from Gelim Peace Traders | GPT*\n\n';
     let total = 0;
 
     cart.forEach(item => {
