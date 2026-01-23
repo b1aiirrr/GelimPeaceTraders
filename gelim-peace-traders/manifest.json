@@ -1,0 +1,38 @@
+{
+  "name": "Gelim Peace Traders",
+  "short_name": "GPT Shop",
+  "description": "Wholesale & retail cereals, rice, grains, legumes and household essentials in Nairobi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f0e8",
+  "theme_color": "#1a2d5a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "food"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Products",
+      "url": "/#products",
+      "description": "Browse our products"
+    },
+    {
+      "name": "Contact Us",
+      "url": "/#contact",
+      "description": "Get in touch"
+    }
+  ]
+}
