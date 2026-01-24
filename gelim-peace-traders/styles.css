@@ -116,8 +116,32 @@ body {
     justify-content: space-between;
 }
 
-.logo img {
-    height: 50px;
+.logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.logo-brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.logo-main {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-navy);
+    letter-spacing: -1px;
+}
+
+.logo-sub {
+    font-size: 0.65rem;
+    font-weight: 800;
+    /* Bolder as requested */
+    color: var(--primary-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .nav-links {
@@ -1101,6 +1125,20 @@ body {
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 32px;
+    }
+
+    .footer-links a,
+    .footer-categories a {
+        display: block;
+        /* Make full width for easier tapping */
+        margin-bottom: 16px;
+        /* Increased spacing */
+        padding: 8px 0;
+        /* Larger touch target */
+        background: rgba(255, 255, 255, 0.05);
+        /* Subtle background for separation */
+        border-radius: 8px;
     }
 }
 
