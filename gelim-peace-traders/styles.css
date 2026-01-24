@@ -116,32 +116,8 @@ body {
     justify-content: space-between;
 }
 
-.logo {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.logo-brand {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-}
-
-.logo-main {
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--primary-navy);
-    letter-spacing: -1px;
-}
-
-.logo-sub {
-    font-size: 0.65rem;
-    font-weight: 800;
-    /* Bolder as requested */
-    color: var(--primary-gold);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.logo img {
+    height: 50px;
 }
 
 .nav-links {
