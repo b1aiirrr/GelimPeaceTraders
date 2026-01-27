@@ -396,6 +396,24 @@ body {
     }
 }
 
+.product-5 {
+    bottom: 80px;
+    left: 30px;
+    animation: floatProduct5 4.8s ease-in-out infinite 0.8s;
+}
+
+@keyframes floatProduct5 {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(-3deg);
+    }
+}
+
 .floating-card {
     position: absolute;
     padding: 12px 20px;
@@ -559,9 +577,10 @@ body {
 .product-img {
     width: 100%;
     height: 150px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 12px;
     margin-bottom: 16px;
+    background: #f8f9fa;
 }
 
 .product-card h3 {
