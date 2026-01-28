@@ -39,6 +39,34 @@ categoryPills.forEach(pill => {
     });
 });
 
+// Footer Category Links - Filter to specific category when clicked
+document.querySelectorAll('.footer-cat-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.dataset.category;
+
+        // Update category pills UI
+        categoryPills.forEach(p => p.classList.remove('active'));
+        const matchingPill = document.querySelector(`.category-pill[data-category="${category}"]`);
+        if (matchingPill) {
+            matchingPill.classList.add('active');
+        }
+
+        // Filter products
+        const products = document.querySelectorAll('.product-card');
+        products.forEach(product => {
+            if (product.dataset.category === category) {
+                product.classList.remove('hidden');
+            } else {
+                product.classList.add('hidden');
+            }
+        });
+
+        // Scroll to products section
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+});
+
 // Add to Cart
 addToOrderBtns.forEach(btn => {
     btn.addEventListener('click', () => {
