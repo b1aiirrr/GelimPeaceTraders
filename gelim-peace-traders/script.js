@@ -184,14 +184,29 @@ document.getElementById('sendOrder').addEventListener('click', () => {
 
     let message = '🛒 *New Order from Gelim Peace Traders | GPT*\n\n';
     let total = 0;
+    let hasEnquiryItems = false;
 
     cart.forEach(item => {
-        const itemTotal = item.price * item.qty;
-        total += itemTotal;
-        message += `• ${item.name} - ${item.qty}kg @ KES ${item.price} = KES ${itemTotal}\n`;
+        if (item.price === 0) {
+            // Enquiry item
+            hasEnquiryItems = true;
+            message += `• ${item.name} - ${item.qty}kg - *Price on Request (Enquiry)*\n`;
+        } else {
+            // Regular priced item
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+            message += `• ${item.name} - ${item.qty}kg @ KES ${item.price} = KES ${itemTotal}\n`;
+        }
     });
 
-    message += `\n*Total: KES ${total}*\n\nPlease confirm availability.`;
+    if (hasEnquiryItems && total > 0) {
+        message += `\n*Subtotal (priced items): KES ${total}*\n`;
+        message += `*Note: Some items require price confirmation*\n\nPlease confirm availability and pricing.`;
+    } else if (hasEnquiryItems) {
+        message += `\n*All items require price confirmation*\n\nPlease provide pricing and confirm availability.`;
+    } else {
+        message += `\n*Total: KES ${total}*\n\nPlease confirm availability.`;
+    }
 
     // Replace with actual WhatsApp number
     const phoneNumber = '254716636455';
